@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>과태료 문자 사기 30초 미니 훈련</title>
+  <meta name="description" content="과태료 문자 사기 상황을 안전하게 판단해보는 교육용 모의 훈련입니다.">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #16232f;
+      --muted: #5c6c7b;
+      --line: #d7e1e8;
+      --brand: #0f766e;
+      --brand-dark: #115e59;
+      --soft: #edf8f6;
+      --paper: #ffffff;
+      --danger: #b42318;
+      --danger-soft: #fff1f0;
+      --medium: #9a6700;
+      --medium-soft: #fff8db;
+      --good: #0b7a3b;
+      --good-soft: #ecfdf3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #f6faf9;
+      line-height: 1.6;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(980px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 12px 0 28px;
+    }
+
+    .brand {
+      color: var(--brand-dark);
+      font-weight: 800;
+    }
+
+    .timer {
+      min-width: 92px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .intro {
+      display: grid;
+      gap: 16px;
+      padding: 28px;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--brand-dark);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .notice {
+      border: 1px solid #fed7aa;
+      border-radius: 8px;
+      background: #fff7ed;
+      padding: 14px 16px;
+      font-size: 15px;
+    }
+
+    .phone {
+      padding: 18px;
+    }
+
+    .message {
+      border-radius: 8px;
+      background: #eef4f7;
+      padding: 16px;
+      white-space: pre-line;
+      font-size: 16px;
+    }
+
+    .quiz {
+      display: grid;
+      gap: 16px;
+      padding: 24px;
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+    }
+
+    .choice {
+      width: 100%;
+      min-height: 54px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .choice:hover {
+      border-color: var(--brand);
+      background: var(--soft);
+    }
+
+    .choice:focus-visible,
+    .primary:focus-visible,
+    .secondary:focus-visible {
+      outline: 3px solid #99f6e4;
+      outline-offset: 2px;
+    }
+
+    .choice[aria-pressed="true"] {
+      border-color: var(--brand);
+      background: var(--soft);
+      box-shadow: inset 4px 0 0 var(--brand);
+    }
+
+    .result {
+      display: none;
+      gap: 14px;
+      padding: 18px;
+      border-radius: 8px;
+    }
+
+    .result.is-visible {
+      display: grid;
+    }
+
+    .result.low {
+      border: 1px solid #abefc6;
+      background: var(--good-soft);
+    }
+
+    .result.medium {
+      border: 1px solid #f4d35e;
+      background: var(--medium-soft);
+    }
+
+    .result.high {
+      border: 1px solid #fda29b;
+      background: var(--danger-soft);
+    }
+
+    .result-label {
+      font-weight: 800;
+    }
+
+    .low .result-label {
+      color: var(--good);
+    }
+
+    .medium .result-label {
+      color: var(--medium);
+    }
+
+    .high .result-label {
+      color: var(--danger);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .primary,
+    .secondary {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .primary {
+      border: 1px solid var(--brand);
+      background: var(--brand);
+      color: #ffffff;
+    }
+
+    .secondary {
+      border: 1px solid var(--line);
+      background: #ffffff;
+      color: var(--ink);
+    }
+
+    .tips {
+      display: grid;
+      gap: 18px;
+      padding: 24px;
+    }
+
+    ul {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .share-box {
+      display: grid;
+      gap: 10px;
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 780px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .intro,
+      .quiz,
+      .tips {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="brand">하마알면 미니 훈련</div>
+      <div class="timer" id="timer">00:00</div>
+    </header>
+
+    <main>
+      <section class="panel intro" aria-labelledby="title">
+        <p class="eyebrow">Simulation Training</p>
+        <h1 id="title">과태료 문자 사기 30초 미니 훈련</h1>
+        <p class="lead">문자 속 링크를 바로 누르기 전에, 가장 안전한 확인 방법을 골라보세요.</p>
+        <p class="notice" id="notice">이 콘텐츠는 실제 고지서나 기관 연락이 아닌 보안 교육용 모의 훈련입니다. 개인정보, 계좌정보, 인증번호를 입력하지 않습니다.</p>
+
+        <div class="phone" aria-label="모의 문자 예시">
+          <div class="message" id="message">[모의 문자]
+교통 과태료 미납 안내
+확인이 필요한 고지 내역이 있습니다.
+아래 링크에서 납부 내역을 확인하세요.
+example-safe-training.kr/check
+
+이 문자는 실제 과태료 고지가 아닌 훈련 예시입니다.</div>
+        </div>
+      </section>
+
+      <section class="panel quiz" aria-labelledby="question">
+        <h2 id="question">이 문자를 받았을 때 가장 안전한 행동은 무엇일까요?</h2>
+        <div class="choices" id="choices" role="group" aria-labelledby="question"></div>
+
+        <div class="result" id="result" aria-live="polite">
+          <div class="result-label" id="result-label"></div>
+          <p id="result-copy"></p>
+          <div class="actions">
+            <button class="primary" id="share-button" type="button">가족에게 훈련 공유하기</button>
+            <button class="secondary" id="retry-button" type="button">다시 선택하기</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel tips" aria-labelledby="tips-title">
+        <h2 id="tips-title">실제 상황에서 기억할 것</h2>
+        <section>
+          <h3>위험 신호</h3>
+          <ul id="risk-signals"></ul>
+        </section>
+        <section>
+          <h3>안전 행동</h3>
+          <ul id="safe-steps"></ul>
+        </section>
+        <section class="share-box">
+          <h3 id="cta-heading">가족과 함께 반복 훈련해보세요</h3>
+          <p id="cta-body" class="small">최신 사기 문자는 계속 바뀝니다. 짧은 모의 훈련을 반복하면 실제 상황에서 더 침착하게 판단할 수 있습니다.</p>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const fallbackData = {
+      simulation_notice: "이 콘텐츠는 실제 고지서나 기관 연락이 아닌 보안 교육용 모의 훈련입니다. 개인정보, 계좌정보, 인증번호를 입력하지 않습니다.",
+      scenario: {
+        body: "[모의 문자]\n교통 과태료 미납 안내\n확인이 필요한 고지 내역이 있습니다.\n아래 링크에서 납부 내역을 확인하세요.\nexample-safe-training.kr/check\n\n이 문자는 실제 과태료 고지가 아닌 훈련 예시입니다.",
+        question: "이 문자를 받았을 때 가장 안전한 행동은 무엇일까요?"
+      },
+      choices: [
+        { id: "A", text: "문자에 있는 링크를 눌러 바로 확인한다.", risk: "high", feedback: "위험합니다. 문자 링크는 피싱 사이트나 악성 앱 설치로 이어질 수 있습니다." },
+        { id: "B", text: "문자 링크를 누르지 않고, 공식 앱이나 공식 웹사이트에서 직접 확인한다.", risk: "low", feedback: "좋습니다. 급한 문자일수록 링크를 누르기보다 공식 경로로 직접 확인하는 습관이 안전합니다." },
+        { id: "C", text: "문자에 적힌 번호로 바로 전화해 확인한다.", risk: "medium", feedback: "주의가 필요합니다. 문자 속 번호도 조작될 수 있으니 공식 고객센터 번호를 직접 찾아 확인하세요." },
+        { id: "D", text: "가족에게 전달하고 대신 링크를 눌러보라고 한다.", risk: "high", feedback: "위험합니다. 가족에게도 링크를 누르게 하지 말고 함께 공식 경로를 확인하세요." }
+      ],
+      recommended_choice_id: "B",
+      risk_signals: [
+        "문자 안의 링크로 확인이나 납부를 유도합니다.",
+        "기관명처럼 보이는 표현으로 신뢰를 만들려고 합니다.",
+        "빨리 확인하라는 압박을 줍니다.",
+        "링크 주소가 공식 도메인인지 확인하기 어렵습니다."
+      ],
+      safe_steps: [
+        "문자 링크를 누르지 않습니다.",
+        "검색이나 즐겨찾기로 공식 사이트에 직접 접속합니다.",
+        "공식 앱 또는 공식 고객센터 번호를 직접 찾아 확인합니다.",
+        "부모님께는 '문자 링크 바로 누르지 않기' 원칙을 반복해서 알려드립니다."
+      ],
+      conversion_cta: {
+        heading: "가족과 함께 반복 훈련해보세요",
+        body: "최신 사기 문자는 계속 바뀝니다. 하마알면에서 짧은 모의 훈련을 반복하면 부모님과 가족이 실제 상황에서 더 침착하게 판단할 수 있습니다."
+      }
+    };
+
+    const state = {
+      selected: null,
+      startedAt: Date.now()
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+
+    function riskLabel(risk) {
+      if (risk === "low") return "안전한 선택";
+      if (risk === "medium") return "주의가 필요한 선택";
+      return "위험한 선택";
+    }
+
+    function renderList(selector, items) {
+      const list = $(selector);
+      list.innerHTML = "";
+      items.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        list.appendChild(li);
+      });
+    }
+
+    function render(data) {
+      $("#notice").textContent = data.simulation_notice;
+      $("#message").textContent = data.scenario.body;
+      $("#question").textContent = data.scenario.question;
+      $("#cta-heading").textContent = data.conversion_cta.heading;
+      $("#cta-body").textContent = data.conversion_cta.body;
+      renderList("#risk-signals", data.risk_signals);
+      renderList("#safe-steps", data.safe_steps);
+
+      const choices = $("#choices");
+      choices.innerHTML = "";
+      data.choices.forEach((choice) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "choice";
+        button.setAttribute("aria-pressed", "false");
+        button.textContent = `${choice.id}. ${choice.text}`;
+        button.addEventListener("click", () => selectChoice(choice, data.recommended_choice_id));
+        choices.appendChild(button);
+      });
+    }
+
+    function selectChoice(choice, recommendedChoiceId) {
+      state.selected = choice.id;
+      document.querySelectorAll(".choice").forEach((button) => {
+        button.setAttribute("aria-pressed", button.textContent.startsWith(`${choice.id}.`) ? "true" : "false");
+      });
+
+      const result = $("#result");
+      result.className = `result is-visible ${choice.risk}`;
+      $("#result-label").textContent = `${riskLabel(choice.risk)} · 선택 ${choice.id}`;
+      const recommendation = choice.id === recommendedChoiceId ? "" : " 권장 선택은 B입니다.";
+      $("#result-copy").textContent = `${choice.feedback}${recommendation}`;
+      localStorage.setItem("hama-mini-2026-06-penalty-sms", JSON.stringify({
+        selected_choice_id: choice.id,
+        selected_risk: choice.risk,
+        completed_at: new Date().toISOString()
+      }));
+    }
+
+    function resetQuiz() {
+      state.selected = null;
+      $("#result").className = "result";
+      document.querySelectorAll(".choice").forEach((button) => button.setAttribute("aria-pressed", "false"));
+    }
+
+    async function shareTraining() {
+      const shareText = "과태료 문자 사기 30초 미니 훈련을 같이 해보세요.";
+      const shareData = {
+        title: "과태료 문자 사기 30초 미니 훈련",
+        text: shareText,
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        await navigator.share(shareData);
+        return;
+      }
+
+      await navigator.clipboard.writeText(`${shareText}\n${window.location.href}`);
+      $("#share-button").textContent = "공유 링크 복사됨";
+      window.setTimeout(() => {
+        $("#share-button").textContent = "가족에게 훈련 공유하기";
+      }, 1800);
+    }
+
+    function startTimer() {
+      const timer = $("#timer");
+      window.setInterval(() => {
+        const elapsed = Math.floor((Date.now() - state.startedAt) / 1000);
+        const minutes = String(Math.floor(elapsed / 60)).padStart(2, "0");
+        const seconds = String(elapsed % 60).padStart(2, "0");
+        timer.textContent = `${minutes}:${seconds}`;
+      }, 1000);
+    }
+
+    async function loadData() {
+      try {
+        const response = await fetch("../../data/MINI-2026-06-penalty-sms.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`Data request failed: ${response.status}`);
+        return await response.json();
+      } catch (error) {
+        console.warn("Using embedded fallback data.", error);
+        return fallbackData;
+      }
+    }
+
+    $("#retry-button").addEventListener("click", resetQuiz);
+    $("#share-button").addEventListener("click", () => {
+      shareTraining().catch(() => {
+        $("#share-button").textContent = "주소 복사를 다시 시도해주세요";
+      });
+    });
+
+    loadData().then(render);
+    startTimer();
+  </script>
+</body>
+</html>
