@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 음성 가족 사칭 30초 확인 훈련</title>
+  <meta name="description" content="AI 음성 가족 사칭과 스미싱 링크 상황에서 안전한 첫 행동을 연습하는 교육용 30초 모의 훈련입니다.">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSD42SWLB9"></script>
+  <script>
+    window.HAMA_ANALYTICS = {
+      campaignId: "2026-06-ai-family-voice-smishing-sim",
+      miniId: "MINI-2026-06-ai-family-voice-smishing-sim",
+      mode: "ga4_enabled",
+      ga4MeasurementId: "G-GSD42SWLB9"
+    };
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ window.dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", window.HAMA_ANALYTICS.ga4MeasurementId, {
+      send_page_view: false,
+      campaign_id: window.HAMA_ANALYTICS.campaignId,
+      mini_id: window.HAMA_ANALYTICS.miniId
+    });
+    function track(name, params) {
+      if (typeof gtag === "function") {
+        gtag("event", name, Object.assign({
+          campaign_id: window.HAMA_ANALYTICS.campaignId,
+          mini_id: window.HAMA_ANALYTICS.miniId
+        }, params || {}));
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #607080;
+      --line: #d8e2e8;
+      --brand: #0f766e;
+      --brand-dark: #115e59;
+      --soft: #eef8f6;
+      --paper: #ffffff;
+      --warn: #a16207;
+      --warn-soft: #fff8db;
+      --risk: #b42318;
+      --risk-soft: #fff1f0;
+      --safe: #0b7a3b;
+      --safe-soft: #ecfdf3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f6faf9;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    .shell {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 30px 0 54px;
+    }
+    .eyebrow {
+      color: var(--brand-dark);
+      font-weight: 800;
+      letter-spacing: .08em;
+      font-size: 13px;
+    }
+    h1 {
+      margin: 12px 0 10px;
+      font-size: clamp(34px, 6vw, 64px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+    .lead {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    .notice {
+      margin: 24px 0;
+      padding: 16px 18px;
+      border: 1px solid #f2c078;
+      background: #fff7ed;
+      border-radius: 8px;
+    }
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      margin-top: 22px;
+    }
+    .message {
+      white-space: pre-wrap;
+      border-left: 4px solid var(--brand);
+      padding: 14px 16px;
+      background: var(--soft);
+      border-radius: 6px;
+      font-weight: 700;
+    }
+    .pressure {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 6px;
+      background: var(--warn-soft);
+      color: var(--warn);
+      font-weight: 800;
+    }
+    .choices {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    button.choice {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 15px 16px;
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+    button.choice:hover { border-color: var(--brand); background: var(--soft); }
+    .result {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+    .result.safe { display: block; background: var(--safe-soft); border-color: #86d7a3; }
+    .result.risk { display: block; background: var(--risk-soft); border-color: #ffb4ab; }
+    .result h2 { margin-top: 0; }
+    .cta {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid #b7ddd8;
+    }
+    .share {
+      display: inline-flex;
+      margin-top: 14px;
+      background: var(--brand);
+      color: white;
+      border: 0;
+      border-radius: 7px;
+      padding: 12px 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="eyebrow">PUBLIC MINI EXPERIENCE</div>
+    <h1>AI 음성 가족 사칭<br>30초 확인 훈련</h1>
+    <p class="lead">아이 목소리처럼 들려도 바로 믿지 않고, 링크를 누르기 전에 저장된 번호와 가족 암호로 확인하는 연습입니다.</p>
+    <div class="notice">이 체험은 교육용 모의 훈련입니다. 실제 가족, 기관, 금융사, 경찰, 학교 안내가 아니며 개인정보나 결제를 요구하지 않습니다.</div>
+
+    <section class="panel" aria-labelledby="scenario-heading">
+      <h2 id="scenario-heading">상황</h2>
+      <p>모르는 번호로 아이를 사칭한 문자가 옵니다. 잠시 뒤 아이와 비슷한 목소리의 짧은 전화까지 옵니다.</p>
+      <div class="message">엄마, 나 폰 고장났어. 친구 폰으로 보내.
+지금 급해서 그런데 이 링크 눌러서 인증 좀 해줘.</div>
+      <div class="pressure">"엄마 빨리, 시간 없어."</div>
+    </section>
+
+    <section class="panel" aria-labelledby="question-heading">
+      <h2 id="question-heading">가장 안전한 첫 행동은 무엇일까요?</h2>
+      <div class="choices">
+        <button class="choice" data-choice="A" data-result="risk">A. 링크를 눌러 인증 화면을 확인한다.</button>
+        <button class="choice" data-choice="B" data-result="safe">B. 전화를 끊고, 저장된 가족 번호로 다시 전화하거나 가족 암호로 확인한다.</button>
+        <button class="choice" data-choice="C" data-result="risk">C. 상대가 아이 목소리처럼 들리므로 바로 송금한다.</button>
+      </div>
+      <div id="result" class="result" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+  <script>
+    track("mini_page_view", { page_path: location.pathname });
+    const result = document.querySelector("#result");
+    const feedback = {
+      safe: {
+        heading: "안전한 선택입니다",
+        body: "AI 음성이나 급한 문자는 먼저 끊고 확인해야 합니다. 저장된 번호로 다시 연락하거나 가족만 아는 암호를 확인하세요."
+      },
+      risk: {
+        heading: "위험한 선택입니다",
+        body: "링크를 누르거나 송금하기 전에 반드시 별도 경로로 확인해야 합니다. 목소리가 비슷해도 AI 음성일 수 있습니다."
+      }
+    };
+    document.querySelectorAll(".choice").forEach((button) => {
+      button.addEventListener("click", () => {
+        const choice = button.dataset.choice;
+        const kind = button.dataset.result;
+        track("mini_choice_selected", { choice_id: choice, result_type: kind });
+        result.className = "result " + kind;
+        result.innerHTML = `
+          <h2>${feedback[kind].heading}</h2>
+          <p>${feedback[kind].body}</p>
+          <div class="cta">
+            <strong>가족 확인 암호를 정해두세요</strong>
+            <p>오늘 가족 단톡방에 이 훈련을 공유하면 실제 상황에서 더 빨리 멈출 수 있습니다.</p>
+            <button class="share" type="button">가족에게 공유하기</button>
+          </div>
+        `;
+        track("mini_result_visible", { choice_id: choice, result_type: kind });
+        track("mini_completed", { choice_id: choice, result_type: kind });
+        result.querySelector(".share").addEventListener("click", async () => {
+          const shareText = "아이 목소리 같아도 링크 누르기 전 저장된 번호로 다시 확인하자. 30초 가족 사칭 예방 훈련: " + location.href;
+          track("family_share_clicked", { channel: "native_or_clipboard" });
+          if (navigator.share) {
+            await navigator.share({ title: document.title, text: shareText, url: location.href });
+          } else {
+            await navigator.clipboard.writeText(shareText);
+            alert("공유 문구를 복사했습니다.");
+          }
+        }, { once: true });
+      });
+    });
+  </script>
+</body>
+</html>
+

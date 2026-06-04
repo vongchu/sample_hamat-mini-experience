@@ -1,0 +1,44 @@
+{
+  "schema_version": "public_mini_experience.v1",
+  "campaign_id": "2026-06-ai-family-voice-smishing-sim",
+  "mini_id": "MINI-2026-06-ai-family-voice-smishing-sim",
+  "title": "AI 음성 가족 사칭 30초 확인 훈련",
+  "notice": "교육용 모의 훈련입니다. 실제 가족, 기관, 금융사, 경찰, 학교 안내가 아니며 개인정보나 결제를 요구하지 않습니다.",
+  "situation": "모르는 번호로 아이를 사칭한 문자가 옵니다. 잠시 뒤 아이와 비슷한 목소리의 짧은 전화까지 옵니다.",
+  "message": "엄마, 나 폰 고장났어. 친구 폰으로 보내. 지금 급해서 그런데 이 링크 눌러서 인증 좀 해줘.",
+  "pressure": "엄마 빨리, 시간 없어.",
+  "question": "가장 안전한 첫 행동은 무엇일까요?",
+  "choices": [
+    {
+      "id": "A",
+      "text": "링크를 눌러 인증 화면을 확인한다.",
+      "result": "risk"
+    },
+    {
+      "id": "B",
+      "text": "전화를 끊고, 저장된 가족 번호로 다시 전화하거나 가족 암호로 확인한다.",
+      "result": "safe"
+    },
+    {
+      "id": "C",
+      "text": "상대가 아이 목소리처럼 들리므로 바로 송금한다.",
+      "result": "risk"
+    }
+  ],
+  "correct_choice_id": "B",
+  "feedback": {
+    "safe": {
+      "heading": "안전한 선택입니다",
+      "body": "AI 음성이나 급한 문자는 먼저 끊고 확인해야 합니다. 저장된 번호로 다시 연락하거나 가족만 아는 암호를 확인하세요."
+    },
+    "risk": {
+      "heading": "위험한 선택입니다",
+      "body": "링크를 누르거나 송금하기 전에 반드시 별도 경로로 확인해야 합니다. 목소리가 비슷해도 AI 음성일 수 있습니다."
+    }
+  },
+  "conversion_cta": {
+    "heading": "가족 확인 암호를 정해두세요",
+    "body": "오늘 가족 단톡방에 이 훈련을 공유하면 실제 상황에서 더 빨리 멈출 수 있습니다."
+  }
+}
+
