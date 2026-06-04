@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>과태료 문자 사기 30초 미니 훈련</title>
   <meta name="description" content="과태료 문자 사기 상황을 안전하게 판단해보는 교육용 모의 훈련입니다.">
+  <script>
+    window.HAMA_ANALYTICS = {
+      campaignId: "2026-06-penalty-sms",
+      miniId: "MINI-2026-06-penalty-sms",
+      mode: "manual_until_ga4_configured",
+      ga4MeasurementId: ""
+    };
+  </script>
   <style>
     :root {
       color-scheme: light;
@@ -379,10 +387,46 @@ example-safe-training.kr/check
 
     const state = {
       selected: null,
-      startedAt: Date.now()
+      startedAt: Date.now(),
+      hasStarted: false
     };
 
     const $ = (selector) => document.querySelector(selector);
+    const params = new URLSearchParams(window.location.search);
+    const analytics = window.HAMA_ANALYTICS || {};
+
+    function trackingPayload(extra = {}) {
+      return {
+        campaign_id: analytics.campaignId || "2026-06-penalty-sms",
+        mini_id: analytics.miniId || "MINI-2026-06-penalty-sms",
+        utm_source: params.get("utm_source") || "direct",
+        utm_medium: params.get("utm_medium") || "none",
+        utm_campaign: params.get("utm_campaign") || "",
+        utm_content: params.get("utm_content") || "",
+        page_path: window.location.pathname,
+        analytics_mode: analytics.mode || "manual",
+        ...extra
+      };
+    }
+
+    function saveLocalEvent(eventName, payload) {
+      const key = "hama-mini-2026-06-penalty-sms-events";
+      const previous = JSON.parse(localStorage.getItem(key) || "[]");
+      previous.push({
+        event_name: eventName,
+        event_at: new Date().toISOString(),
+        ...payload
+      });
+      localStorage.setItem(key, JSON.stringify(previous.slice(-50)));
+    }
+
+    function trackEvent(eventName, extra = {}) {
+      const payload = trackingPayload(extra);
+      saveLocalEvent(eventName, payload);
+      if (typeof window.gtag === "function") {
+        window.gtag("event", eventName, payload);
+      }
+    }
 
     function riskLabel(risk) {
       if (risk === "low") return "안전한 선택";
@@ -424,6 +468,13 @@ example-safe-training.kr/check
 
     function selectChoice(choice, recommendedChoiceId) {
       state.selected = choice.id;
+      if (!state.hasStarted) {
+        state.hasStarted = true;
+        trackEvent("mini_choice_selected", {
+          selected_choice_id: choice.id,
+          selected_risk: choice.risk
+        });
+      }
       document.querySelectorAll(".choice").forEach((button) => {
         button.setAttribute("aria-pressed", button.textContent.startsWith(`${choice.id}.`) ? "true" : "false");
       });
@@ -433,6 +484,15 @@ example-safe-training.kr/check
       $("#result-label").textContent = `${riskLabel(choice.risk)} · 선택 ${choice.id}`;
       const recommendation = choice.id === recommendedChoiceId ? "" : " 권장 선택은 B입니다.";
       $("#result-copy").textContent = `${choice.feedback}${recommendation}`;
+      trackEvent("mini_result_visible", {
+        selected_choice_id: choice.id,
+        selected_risk: choice.risk,
+        is_recommended_choice: choice.id === recommendedChoiceId
+      });
+      trackEvent("mini_completed", {
+        selected_choice_id: choice.id,
+        selected_risk: choice.risk
+      });
       localStorage.setItem("hama-mini-2026-06-penalty-sms", JSON.stringify({
         selected_choice_id: choice.id,
         selected_risk: choice.risk,
@@ -456,10 +516,12 @@ example-safe-training.kr/check
 
       if (navigator.share) {
         await navigator.share(shareData);
+        trackEvent("family_share_clicked", { share_method: "native_share" });
         return;
       }
 
       await navigator.clipboard.writeText(`${shareText}\n${window.location.href}`);
+      trackEvent("family_share_clicked", { share_method: "clipboard" });
       $("#share-button").textContent = "공유 링크 복사됨";
       window.setTimeout(() => {
         $("#share-button").textContent = "가족에게 훈련 공유하기";
@@ -495,6 +557,7 @@ example-safe-training.kr/check
     });
 
     loadData().then(render);
+    trackEvent("mini_page_view");
     startTimer();
   </script>
 </body>
