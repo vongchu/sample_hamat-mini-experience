@@ -5,13 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>과태료 문자 사기 30초 미니 훈련</title>
   <meta name="description" content="과태료 문자 사기 상황을 안전하게 판단해보는 교육용 모의 훈련입니다.">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZPQY0M0QYL"></script>
   <script>
     window.HAMA_ANALYTICS = {
       campaignId: "2026-06-penalty-sms",
       miniId: "MINI-2026-06-penalty-sms",
-      mode: "manual_until_ga4_configured",
-      ga4MeasurementId: ""
+      mode: "ga4_enabled",
+      ga4MeasurementId: "G-ZPQY0M0QYL"
     };
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", window.HAMA_ANALYTICS.ga4MeasurementId, {
+      send_page_view: false,
+      campaign_id: window.HAMA_ANALYTICS.campaignId,
+      mini_id: window.HAMA_ANALYTICS.miniId
+    });
   </script>
   <style>
     :root {
