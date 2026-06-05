@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI 음성 가족 사칭 30초 확인 훈련</title>
-  <meta name="description" content="AI 음성 가족 사칭과 스미싱 링크 상황에서 안전한 첫 행동을 연습하는 교육용 30초 모의 훈련입니다.">
+  <title>AI 가족 목소리 긴급송금 30초 체험</title>
+  <meta name="description" content="낯선 번호에서 가족 목소리처럼 들리는 긴급 송금 메시지가 왔을 때 첫 대응을 30초 안에 점검하는 교육용 모의 체험입니다.">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GSD42SWLB9"></script>
   <script>
     window.HAMA_ANALYTICS = {
@@ -45,8 +45,12 @@
       --risk-soft: #fff1f0;
       --safe: #0b7a3b;
       --safe-soft: #ecfdf3;
+      --neutral: #475467;
+      --neutral-soft: #f2f4f7;
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -54,28 +58,35 @@
       color: var(--ink);
       line-height: 1.6;
     }
+
     .shell {
       width: min(960px, calc(100% - 32px));
       margin: 0 auto;
       padding: 30px 0 54px;
     }
+
     .eyebrow {
       color: var(--brand-dark);
       font-weight: 800;
       letter-spacing: .08em;
       font-size: 13px;
     }
+
     h1 {
       margin: 12px 0 10px;
-      font-size: clamp(34px, 6vw, 64px);
+      font-size: clamp(34px, 6vw, 58px);
       line-height: 1.12;
       letter-spacing: 0;
     }
+
+    h2, h3 { line-height: 1.25; }
+
     .lead {
       max-width: 760px;
       color: var(--muted);
       font-size: 18px;
     }
+
     .notice {
       margin: 24px 0;
       padding: 16px 18px;
@@ -83,6 +94,7 @@
       background: #fff7ed;
       border-radius: 8px;
     }
+
     .panel {
       background: var(--paper);
       border: 1px solid var(--line);
@@ -90,14 +102,49 @@
       padding: 24px;
       margin-top: 22px;
     }
-    .message {
-      white-space: pre-wrap;
-      border-left: 4px solid var(--brand);
-      padding: 14px 16px;
-      background: var(--soft);
-      border-radius: 6px;
+
+    .scenario-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .scenario-card {
+      min-height: 118px;
+      border: 1px solid #c8ded7;
+      border-radius: 8px;
+      padding: 14px;
+      background: linear-gradient(145deg, #f7fffc, #e9f6f2);
+    }
+
+    .scenario-card strong {
+      display: block;
+      color: var(--brand-dark);
+      margin-bottom: 6px;
+    }
+
+    .chat {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .bubble {
+      width: min(78%, 600px);
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid #eadfce;
+      background: #fffaf2;
       font-weight: 700;
     }
+
+    .bubble.user {
+      justify-self: end;
+      border-color: #b7d9d2;
+      background: #ecf8f4;
+    }
+
     .pressure {
       margin-top: 12px;
       padding: 12px 14px;
@@ -106,12 +153,32 @@
       color: var(--warn);
       font-weight: 800;
     }
+
+    .timer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 18px;
+      padding: 12px 14px;
+      border: 1px solid #d9e6e2;
+      border-radius: 8px;
+      background: #fbfffd;
+    }
+
+    .timer {
+      font-weight: 900;
+      color: var(--brand-dark);
+    }
+
     .choices {
       display: grid;
       gap: 10px;
       margin-top: 18px;
     }
-    button.choice {
+
+    button.choice,
+    button.action {
       width: 100%;
       text-align: left;
       border: 1px solid var(--line);
@@ -122,7 +189,21 @@
       font: inherit;
       cursor: pointer;
     }
-    button.choice:hover { border-color: var(--brand); background: var(--soft); }
+
+    button.choice:hover,
+    button.choice:focus-visible,
+    button.action:hover,
+    button.action:focus-visible {
+      border-color: var(--brand);
+      background: var(--soft);
+      outline: none;
+    }
+
+    button.choice:disabled {
+      cursor: default;
+      opacity: .62;
+    }
+
     .result {
       display: none;
       margin-top: 20px;
@@ -130,9 +211,21 @@
       border-radius: 8px;
       border: 1px solid var(--line);
     }
-    .result.safe { display: block; background: var(--safe-soft); border-color: #86d7a3; }
-    .result.risk { display: block; background: var(--risk-soft); border-color: #ffb4ab; }
+
+    .result.visible { display: block; }
+    .result.safe { background: var(--safe-soft); border-color: #86d7a3; }
+    .result.risk { background: var(--risk-soft); border-color: #ffb4ab; }
+    .result.timeout { background: var(--neutral-soft); border-color: #cfd4dc; }
     .result h2 { margin-top: 0; }
+
+    .result-meta {
+      display: grid;
+      gap: 6px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
     .cta {
       margin-top: 18px;
       padding: 18px;
@@ -140,87 +233,301 @@
       background: var(--soft);
       border: 1px solid #b7ddd8;
     }
-    .share {
-      display: inline-flex;
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
       margin-top: 14px;
-      background: var(--brand);
-      color: white;
+    }
+
+    .small-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
       border: 0;
       border-radius: 7px;
-      padding: 12px 16px;
+      background: var(--brand);
+      color: white;
+      padding: 0 14px;
       font-weight: 800;
       cursor: pointer;
+    }
+
+    .small-button.secondary {
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+    }
+
+    .history { display: none; }
+    .history.visible { display: block; }
+
+    @media (max-width: 720px) {
+      .scenario-cards { grid-template-columns: 1fr; }
+      .bubble { width: 100%; }
+      .timer-row { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
 <body>
   <main class="shell">
-    <div class="eyebrow">PUBLIC MINI EXPERIENCE</div>
-    <h1>AI 음성 가족 사칭<br>30초 확인 훈련</h1>
-    <p class="lead">아이 목소리처럼 들려도 바로 믿지 않고, 링크를 누르기 전에 저장된 번호와 가족 암호로 확인하는 연습입니다.</p>
-    <div class="notice">이 체험은 교육용 모의 훈련입니다. 실제 가족, 기관, 금융사, 경찰, 학교 안내가 아니며 개인정보나 결제를 요구하지 않습니다.</div>
+    <div class="eyebrow">PUBLIC 30SEC CHECK</div>
+    <h1>AI 가족 목소리<br>긴급송금 30초 체험</h1>
+    <p class="lead">낯선 번호에서 가족 목소리처럼 들리는 메시지가 왔을 때, 링크나 송금 전에 첫 대응을 30초 안에 점검해봅니다.</p>
+    <div class="notice">이 체험은 교육용 모의 훈련입니다. 실제 기관 안내가 아니며 개인정보, 계좌정보, 인증번호, 결제를 요구하지 않습니다.</div>
+
+    <section class="panel history" id="history-panel" aria-labelledby="history-heading">
+      <h2 id="history-heading">최근 결과 확인</h2>
+      <p id="history-summary">아직 이 브라우저에 저장된 결과가 없습니다.</p>
+      <div class="actions">
+        <button class="small-button secondary" type="button" id="show-last-result">저장된 결과 보기</button>
+        <button class="small-button secondary" type="button" id="clear-result">저장된 결과 지우기</button>
+      </div>
+    </section>
 
     <section class="panel" aria-labelledby="scenario-heading">
-      <h2 id="scenario-heading">상황</h2>
-      <p>모르는 번호로 아이를 사칭한 문자가 옵니다. 잠시 뒤 아이와 비슷한 목소리의 짧은 전화까지 옵니다.</p>
-      <div class="message">엄마, 나 폰 고장났어. 친구 폰으로 보내.
-지금 급해서 그런데 이 링크 눌러서 인증 좀 해줘.</div>
-      <div class="pressure">"엄마 빨리, 시간 없어."</div>
+      <h2 id="scenario-heading">사전 상황</h2>
+      <p>밤 10시 40분, 모르는 번호에서 딸 목소리와 매우 비슷한 음성 메시지가 도착했습니다.</p>
+      <div class="scenario-cards" aria-label="상황 카드">
+        <article class="scenario-card">
+          <strong>늦은 밤 낯선 번호</strong>
+          <span>가족이 평소 쓰던 번호가 아니라 처음 보는 번호로 연락이 왔습니다.</span>
+        </article>
+        <article class="scenario-card">
+          <strong>목소리가 너무 비슷함</strong>
+          <span>짧은 음성인데도 가족처럼 들려 마음이 먼저 흔들립니다.</span>
+        </article>
+        <article class="scenario-card">
+          <strong>통화가 어렵다는 압박</strong>
+          <span>상대는 휴대폰이 고장 났다며 이 번호로만 연락하라고 말합니다.</span>
+        </article>
+      </div>
+      <div class="chat" aria-label="모의 대화">
+        <div class="bubble">엄마, 나 사고 났어. 지금 통화가 안 돼.</div>
+        <div class="bubble user">잠깐만. 원래 번호로 다시 전화해볼게.</div>
+        <div class="bubble">그 폰은 고장 났어. 합의금 200만원이 바로 필요해. 이 번호로만 연락해줘.</div>
+      </div>
+      <div class="pressure">지금 바로 어떻게 대응하시겠습니까?</div>
     </section>
 
     <section class="panel" aria-labelledby="question-heading">
-      <h2 id="question-heading">가장 안전한 첫 행동은 무엇일까요?</h2>
+      <h2 id="question-heading">30초 안에 첫 행동을 선택하세요</h2>
+      <div class="timer-row">
+        <span>압박상황에서 바로 누를 행동을 골라보세요.</span>
+        <span class="timer" id="timer">30초</span>
+      </div>
       <div class="choices">
-        <button class="choice" data-choice="A" data-result="risk">A. 링크를 눌러 인증 화면을 확인한다.</button>
-        <button class="choice" data-choice="B" data-result="safe">B. 전화를 끊고, 저장된 가족 번호로 다시 전화하거나 가족 암호로 확인한다.</button>
-        <button class="choice" data-choice="C" data-result="risk">C. 상대가 아이 목소리처럼 들리므로 바로 송금한다.</button>
+        <button class="choice" data-choice="callback" data-result="safe">기존 번호 확인: 원래 저장된 가족 번호로 다시 전화</button>
+        <button class="choice" data-choice="hold" data-result="safe">일단 멈춤: 급하게 송금하지 않고 대화를 잠시 중단</button>
+        <button class="choice" data-choice="consult" data-result="safe">가족에게 공유: 가족 단톡방에 상황을 먼저 공유</button>
+        <button class="choice" data-choice="transfer_money" data-result="risk">합의금 송금: 낯선 계좌로 200만원 송금</button>
+        <button class="choice" data-choice="ask_more" data-result="risk">계좌번호 받기: 합의금을 보낼 계좌번호 요청</button>
       </div>
       <div id="result" class="result" role="status" aria-live="polite"></div>
     </section>
   </main>
+
   <script>
-    track("mini_page_view", { page_path: location.pathname });
-    const result = document.querySelector("#result");
+    const STORAGE_KEY = "hama:lastResult:2026-06-ai-family-voice-smishing-sim";
     const feedback = {
       safe: {
-        heading: "안전한 선택입니다",
-        body: "AI 음성이나 급한 문자는 먼저 끊고 확인해야 합니다. 저장된 번호로 다시 연락하거나 가족만 아는 암호를 확인하세요."
+        heading: "안전한 대응입니다.",
+        label: "안전 행동",
+        body: "상대의 말을 그대로 따르지 않고 기존 번호, 가족 공유, 잠시 멈춤으로 확인하려는 대응은 안전합니다.",
+        next: "실제 상황에서도 상대가 준 번호가 아니라 원래 저장된 연락처나 가족 단톡방으로 다시 확인하세요."
       },
       risk: {
-        heading: "위험한 선택입니다",
-        body: "링크를 누르거나 송금하기 전에 반드시 별도 경로로 확인해야 합니다. 목소리가 비슷해도 AI 음성일 수 있습니다."
+        heading: "위험한 대응입니다.",
+        label: "위험 행동",
+        body: "송금, 계좌번호 요청, 링크 클릭은 실제 피해로 이어질 수 있습니다. 목소리가 비슷해도 AI 음성일 수 있습니다.",
+        next: "먼저 멈추고 기존 연락처로 다시 확인한 뒤 가족에게 공유하세요."
+      },
+      timeout: {
+        heading: "압박상황에서 판단이 멈춘 상태입니다.",
+        label: "무응답/시간초과",
+        body: "30초 안에 아무 대응도 하지 못했습니다. 급한 상황에서 멈추는 것은 자연스러운 반응일 수 있지만, 다음 행동이 필요합니다.",
+        next: "멈춘 뒤에는 기존 연락처 확인, 가족 공유, 공식 경로 확인 중 하나로 이어가야 안전합니다."
       }
     };
+    const choiceLabels = {
+      callback: "기존 번호 확인",
+      hold: "일단 멈춤",
+      consult: "가족에게 공유",
+      transfer_money: "합의금 송금",
+      ask_more: "계좌번호 받기",
+      timeout: "시간 초과"
+    };
+    const result = document.querySelector("#result");
+    const timer = document.querySelector("#timer");
+    const historyPanel = document.querySelector("#history-panel");
+    const historySummary = document.querySelector("#history-summary");
+    let timeLeft = 30;
+    let completed = false;
+
+    function nowText() {
+      return new Date().toLocaleString("ko-KR", { hour12: false });
+    }
+
+    function safeTrack(name, payload) {
+      try {
+        track(name, payload);
+      } catch (_) {
+        // Analytics failure must not block the public training page.
+      }
+    }
+
+    function saveResult(record) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+      updateHistory();
+    }
+
+    function loadResult() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function resultClass(kind) {
+      if (kind === "safe") return "safe";
+      if (kind === "timeout") return "timeout";
+      return "risk";
+    }
+
+    function resultLink(record) {
+      return location.origin + location.pathname + location.search + "#result-" + record.resultType;
+    }
+
+    function renderResult(record, options = {}) {
+      const data = feedback[record.resultType];
+      result.className = "result visible " + resultClass(record.resultType);
+      result.innerHTML = `
+        <h2>${data.heading}</h2>
+        <p>${data.body}</p>
+        <div class="result-meta">
+          <span>선택한 대응: <strong>${choiceLabels[record.choiceId] || record.choiceId}</strong></span>
+          <span>판정: <strong>${data.label}</strong></span>
+          <span>결과 시각: ${record.completedAt}</span>
+        </div>
+        <div class="cta">
+          <strong>다음 행동</strong>
+          <p>${data.next}</p>
+          <div class="actions">
+            <button class="small-button" type="button" id="copy-result-link">결과 링크 복사</button>
+            <button class="small-button secondary" type="button" id="share-family">가족 공유 문구 복사</button>
+            <button class="small-button secondary" type="button" id="retry-check">다시 해보기</button>
+          </div>
+        </div>
+      `;
+      wireResultButtons(record);
+      if (options.scroll !== false) {
+        result.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function setChoicesDisabled(disabled) {
+      document.querySelectorAll(".choice").forEach((button) => {
+        button.disabled = disabled;
+      });
+    }
+
+    function complete(choiceId, resultType, source) {
+      if (completed) return;
+      completed = true;
+      setChoicesDisabled(true);
+      const record = {
+        campaignId: window.HAMA_ANALYTICS.campaignId,
+        miniId: window.HAMA_ANALYTICS.miniId,
+        choiceId,
+        resultType,
+        source,
+        completedAt: nowText()
+      };
+      saveResult(record);
+      renderResult(record);
+      location.hash = "result-" + resultType;
+      safeTrack("mini_choice_selected", { choice_id: choiceId, result_type: resultType, source });
+      safeTrack("mini_result_visible", { choice_id: choiceId, result_type: resultType, source });
+      safeTrack("mini_completed", { choice_id: choiceId, result_type: resultType, source });
+      if (resultType === "timeout") {
+        safeTrack("mini_timeout_completed", { choice_id: choiceId, result_type: resultType, source });
+      }
+    }
+
+    function wireResultButtons(record) {
+      document.querySelector("#copy-result-link")?.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(resultLink(record));
+        safeTrack("mini_result_link_copied", { result_type: record.resultType });
+        alert("결과 확인 링크를 복사했습니다.");
+      }, { once: true });
+      document.querySelector("#share-family")?.addEventListener("click", async () => {
+        const text = "AI 가족 목소리 긴급송금 30초 체험 결과: "
+          + (choiceLabels[record.choiceId] || record.choiceId)
+          + ". 가족끼리 기존 번호 확인 습관을 정해두세요. "
+          + location.href;
+        await navigator.clipboard.writeText(text);
+        safeTrack("family_share_clicked", { channel: "clipboard", result_type: record.resultType });
+        alert("가족 공유 문구를 복사했습니다.");
+      }, { once: true });
+      document.querySelector("#retry-check")?.addEventListener("click", () => {
+        localStorage.removeItem(STORAGE_KEY);
+        location.href = location.pathname + location.search;
+      }, { once: true });
+    }
+
+    function updateHistory() {
+      const last = loadResult();
+      if (!last) {
+        historyPanel.classList.remove("visible");
+        historySummary.textContent = "아직 이 브라우저에 저장된 결과가 없습니다.";
+        return;
+      }
+      historyPanel.classList.add("visible");
+      const data = feedback[last.resultType];
+      historySummary.innerHTML = `마지막 결과: <strong>${choiceLabels[last.choiceId] || last.choiceId}</strong> / ${data.label} / ${last.completedAt}`;
+    }
+
     document.querySelectorAll(".choice").forEach((button) => {
       button.addEventListener("click", () => {
-        const choice = button.dataset.choice;
-        const kind = button.dataset.result;
-        track("mini_choice_selected", { choice_id: choice, result_type: kind });
-        result.className = "result " + kind;
-        result.innerHTML = `
-          <h2>${feedback[kind].heading}</h2>
-          <p>${feedback[kind].body}</p>
-          <div class="cta">
-            <strong>가족 확인 암호를 정해두세요</strong>
-            <p>오늘 가족 단톡방에 이 훈련을 공유하면 실제 상황에서 더 빨리 멈출 수 있습니다.</p>
-            <button class="share" type="button">가족에게 공유하기</button>
-          </div>
-        `;
-        track("mini_result_visible", { choice_id: choice, result_type: kind });
-        track("mini_completed", { choice_id: choice, result_type: kind });
-        result.querySelector(".share").addEventListener("click", async () => {
-          const shareText = "아이 목소리 같아도 링크 누르기 전 저장된 번호로 다시 확인하자. 30초 가족 사칭 예방 훈련: " + location.href;
-          track("family_share_clicked", { channel: "native_or_clipboard" });
-          if (navigator.share) {
-            await navigator.share({ title: document.title, text: shareText, url: location.href });
-          } else {
-            await navigator.clipboard.writeText(shareText);
-            alert("공유 문구를 복사했습니다.");
-          }
-        }, { once: true });
+        complete(button.dataset.choice, button.dataset.result, "choice");
       });
     });
+
+    document.querySelector("#show-last-result").addEventListener("click", () => {
+      const last = loadResult();
+      if (last) {
+        safeTrack("mini_result_reopened", { result_type: last.resultType });
+        renderResult(last);
+      }
+    });
+    document.querySelector("#clear-result").addEventListener("click", () => {
+      localStorage.removeItem(STORAGE_KEY);
+      updateHistory();
+      alert("저장된 결과를 지웠습니다.");
+    });
+
+    const interval = window.setInterval(() => {
+      if (completed) {
+        window.clearInterval(interval);
+        return;
+      }
+      timeLeft -= 1;
+      timer.textContent = timeLeft + "초";
+      if (timeLeft <= 0) {
+        window.clearInterval(interval);
+        complete("timeout", "timeout", "timer");
+      }
+    }, 1000);
+
+    safeTrack("mini_page_view", { page_path: location.pathname });
+    updateHistory();
+    const lastResult = loadResult();
+    if (location.hash.startsWith("#result") && lastResult) {
+      renderResult(lastResult, { scroll: true });
+    }
   </script>
 </body>
 </html>
-
