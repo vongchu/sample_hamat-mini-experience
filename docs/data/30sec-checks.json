@@ -3,6 +3,142 @@
   "source_policy": "independent_30sec_check_registry_public_renderer",
   "checks": [
     {
+      "issue_id": "CHECK-2026-06-worldcup-qr-ticket-scam",
+      "campaign_id": "2026-06-worldcup-qr-ticket-scam",
+      "slug": "worldcup-qr-ticket-scam",
+      "legacy_path": "/mini/2026-06-worldcup-qr-ticket-scam/",
+      "title": "월드컵 무료중계 링크, 바로 누르기 전 30초만 점검하세요",
+      "check_title": "월드컵 무료중계·티켓 QR 사기 30초점검",
+      "subtitle": "무료중계·티켓 QR은 공식 경로에서 다시 확인",
+      "category": "global_sports_event_qr_ticket_scam",
+      "target": "sports_fans_parents_and_general_users",
+      "published_at": "2026-06-05",
+      "display_priority": 30,
+      "why_now": "2026년 월드컵을 앞두고 무료중계, 티켓 할인, 이벤트 당첨, QR 입장권을 빙자한 링크·결제 유도가 늘어날 수 있어 사전 대응 훈련 가치가 높습니다.",
+      "educational_notice": "교육용 모의 상황입니다. 실제 티켓 판매, 중계권 안내, 결제, 개인정보 입력을 요구하지 않습니다.",
+      "situation_text": "친구 단톡방에 월드컵 무료중계 링크와 '오늘만 티켓 할인 QR' 안내가 함께 올라왔습니다.",
+      "situation_cards": [
+        {
+          "title": "경기 하루 전",
+          "body": "단톡방에 '무료 생중계' 링크가 급하게 공유됩니다."
+        },
+        {
+          "title": "티켓 QR 할인",
+          "body": "공식 예매처처럼 보이는 화면에서 QR 결제를 요구합니다."
+        },
+        {
+          "title": "지금 아니면 마감",
+          "body": "남은 좌석이 적다며 빠른 결정을 압박합니다."
+        }
+      ],
+      "card_images": [],
+      "chat_preroll_turns": [
+        {
+          "speaker": "counterparty",
+          "label": "상대",
+          "text": "야, 오늘 월드컵 무료중계 여기서 볼 수 있대. 링크 막히기 전에 들어와."
+        },
+        {
+          "speaker": "user",
+          "label": "나",
+          "text": "공식 중계 링크 맞아? 주소가 좀 낯선데."
+        },
+        {
+          "speaker": "counterparty",
+          "label": "상대",
+          "text": "티켓 QR도 오늘만 할인이라는데? 결제 먼저 하면 모바일 입장권 바로 준대."
+        }
+      ],
+      "final_prompt": "지금 링크 열고 QR 결제까지 해도 괜찮을까?",
+      "user_response_prompt": "상대에게 어떻게 대응하시겠습니까? 실제 대화처럼 자유롭게 말하거나 아래 행동을 선택하세요.",
+      "timer_seconds": 30,
+      "action_choices": [
+        {
+          "id": "A",
+          "label": "공식 경로 확인",
+          "description": "중계사·FIFA·공식 예매처를 직접 검색해 확인",
+          "response_text": "공식 중계사·공식 예매처를 직접 확인하겠다고 선택했습니다.",
+          "risk_level": "safe",
+          "action_code": "OFFICIAL_CHECK"
+        },
+        {
+          "id": "B",
+          "label": "일단 멈춤",
+          "description": "마감 압박을 무시하고 링크 클릭과 QR 결제를 보류",
+          "response_text": "마감 압박을 무시하고 링크 클릭과 결제를 멈추겠다고 선택했습니다.",
+          "risk_level": "safe",
+          "action_code": "HOLD"
+        },
+        {
+          "id": "C",
+          "label": "가족·친구에게 공유",
+          "description": "단톡방에 바로 누르지 말라고 알리고 공식 경로 확인을 요청",
+          "response_text": "가족·친구에게 공유해 단독 판단을 피하겠다고 선택했습니다.",
+          "risk_level": "safe",
+          "action_code": "ASK_ADVISOR"
+        },
+        {
+          "id": "D",
+          "label": "무료중계 링크 클릭",
+          "description": "링크를 열고 앱 설치나 로그인 안내를 따름",
+          "response_text": "낯선 무료중계 링크를 열어보는 위험 행동을 선택했습니다.",
+          "risk_level": "risk",
+          "action_code": "OPEN_LINK"
+        },
+        {
+          "id": "E",
+          "label": "QR 티켓 결제",
+          "description": "할인 QR을 스캔하고 카드정보를 입력",
+          "response_text": "QR 결제나 카드정보 입력으로 이어질 수 있는 위험 행동을 선택했습니다.",
+          "risk_level": "risk",
+          "action_code": "TRANSFER"
+        }
+      ],
+      "result_screen": {
+        "safe": {
+          "title": "잘 멈췄어요",
+          "summary": "링크를 바로 누르지 않고 공식 경로로 다시 확인하려는 대응은 안전 신호입니다.",
+          "diagnosis": "검증 행동이 보입니다. 지금처럼 공식 경로와 기존 연락처를 우선하세요."
+        },
+        "caution": {
+          "title": "확인은 좋지만 경로가 중요해요",
+          "summary": "확인하려는 시도는 좋지만, 상대가 준 링크나 QR 안에서 확인하면 여전히 위험할 수 있습니다.",
+          "diagnosis": "확인하려는 태도는 좋지만, 상대가 준 경로 안에 머물지 않아야 합니다."
+        },
+        "risk": {
+          "title": "하마터면 가짜 중계·QR 결제로 이어질 수 있어요",
+          "summary": "무료중계 링크 클릭, 앱 설치, QR 결제, 카드정보 입력으로 이어질 수 있는 위험 대응입니다.",
+          "diagnosis": "상대 요구를 따라가는 행동 신호가 보입니다. 먼저 멈추고 공식 경로로 확인해야 합니다."
+        },
+        "timeout": {
+          "title": "압박상황에서 판단이 멈춘 상태입니다",
+          "summary": "30초 안에 아무 대응도 하지 못했습니다. 급한 상황에서 멈추는 것은 자연스러운 반응이지만, 다음 검증 행동이 필요합니다.",
+          "diagnosis": "멈춘 뒤에는 공식 경로 확인, 가족 공유, 기존 연락처 확인 중 하나로 이어져야 안전합니다."
+        }
+      },
+      "risk_signals": [
+        "무료중계·티켓 할인처럼 욕구를 자극합니다.",
+        "오늘만, 마감 임박, 좌석 부족 같은 시간 압박을 줍니다.",
+        "공식 예매처처럼 보이는 QR이나 결제 화면으로 유도합니다.",
+        "앱 설치, 로그인, 카드정보 입력을 요구할 수 있습니다."
+      ],
+      "safe_actions": [
+        "링크를 누르지 말고 공식 중계사·공식 예매처를 직접 검색합니다.",
+        "QR 결제 전 URL, 판매자, 예매처, 환불 조건을 확인합니다.",
+        "단톡방에 공유된 링크는 가족·친구에게 바로 누르지 말라고 알립니다.",
+        "카드정보, 인증번호, 계정 로그인을 요구하면 중단합니다."
+      ],
+      "cta": {
+        "diagnosis": "전체 안심진단 해보기",
+        "training": "상황별 대응훈련 해보기",
+        "hama_ai_experience": "하마터면 웹서비스 보기",
+        "other_checks": "다른 30초점검 보기",
+        "diagnosis_url": "https://vongchu.github.io/sample_hamat-mini-experience/mini/30sec-checks/",
+        "training_url": "https://vongchu.github.io/sample_hamat-mini-experience/mini/30sec-checks/",
+        "hama_ai_experience_url": "https://vongchu.github.io/sample_hamat-mini-experience/"
+      }
+    },
+    {
       "issue_id": "CHECK-2026-06-penalty-sms",
       "campaign_id": "2026-06-penalty-sms",
       "slug": "penalty-sms",
