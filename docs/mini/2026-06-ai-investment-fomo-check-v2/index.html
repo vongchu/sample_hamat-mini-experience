@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+  <!-- independent_issue_check_react_runtime.v1 -->
+  <script>window.HAMA_PUBLIC_ISSUE_ID = "issue_2026_06_ai_investment_fomo_check_v2";</script>
+  <script>
+    if (!window.location.hash) {
+      window.location.replace(window.location.pathname + window.location.search + '#/issue-check?issue_id=' + encodeURIComponent(window.HAMA_PUBLIC_ISSUE_ID));
+    }
+  </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Fraud Prevention MVP</title>
+    <script type="module" crossorigin src="./assets/index-DTamCbxW.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Bc8JaOlA.css">
+  <!-- hama-public-promo-shell -->
+  <style>
+    body.hama-public-promo header a[href*="#/diagnosis"],
+    body.hama-public-promo header a[href*="#/training"],
+    body.hama-public-promo header a[href*="#/report"],
+    body.hama-public-promo header a[href*="#/campaign-report"],
+    body.hama-public-promo header a[href*="#/post-check"],
+    body.hama-public-promo header a[href*="#/experience-bridge"] {
+      display: none !important;
+    }
+    .hama-public-timeline-link {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 9999;
+      border: 1px solid #cfe1ec;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.94);
+      color: #18324a;
+      box-shadow: 0 10px 28px rgba(20, 38, 60, 0.13);
+      font: 800 14px/1.2 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 11px 15px;
+      text-decoration: none;
+    }
+    .hama-public-timeline-link:hover {
+      border-color: #16a394;
+      color: #027466;
+    }
+    body.hama-public-promo .issue-situation-card-visual {
+      background-image: var(--issue-card-image) !important;
+      background-size: cover !important;
+      background-position: center !important;
+      min-height: 155px !important;
+      overflow: hidden !important;
+    }
+    body.hama-public-promo .issue-situation-card-copy {
+      left: 8px !important;
+      right: 8px !important;
+      bottom: 8px !important;
+      width: auto !important;
+      max-width: calc(100% - 16px) !important;
+      padding: 7px 9px !important;
+      border-radius: 10px !important;
+      background: rgba(255, 255, 255, 0.78) !important;
+      backdrop-filter: blur(3px);
+      box-shadow: 0 8px 18px rgba(20, 38, 60, 0.16) !important;
+      color: #18324a !important;
+      font-family: "Comic Sans MS", "Nanum Pen Script", "Segoe Print", system-ui, sans-serif !important;
+    }
+    body.hama-public-promo .issue-situation-card-copy strong {
+      display: block !important;
+      font-size: 13px !important;
+      line-height: 1.12 !important;
+      font-weight: 900 !important;
+      letter-spacing: 0 !important;
+      margin: 0 0 2px !important;
+    }
+    body.hama-public-promo .issue-situation-card-copy p {
+      font-size: 10.5px !important;
+      line-height: 1.18 !important;
+      font-weight: 800 !important;
+      letter-spacing: 0 !important;
+      margin: 0 !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden !important;
+    }
+  </style>
+  <script>
+    (function () {
+      var hamaWebUrl = "https://hama.thinkpool.com/TP01004T/main";
+      var ctaMap = {
+        "진단": "전체 사기위험 진단하기",
+        "훈련": "비슷한 상황 연습하기",
+        "하마터면 AI체험": "하마터면 AI로 더 알아보기",
+        "다른 응답 입력": "다시 답해보기",
+        "결과 링크 복사": "결과 링크 복사하기",
+        "가족 공유 문구 복사": "가족에게 공유할 문구 복사"
+      };
+      var navLabels = new Set(["진단", "훈련", "리포트", "하마터면 돌아가기"]);
+
+      function textOf(el) {
+        return (el.textContent || "").replace(/\s+/g, " ").trim();
+      }
+
+      function isTopNavigation(el) {
+        return Boolean(el.closest("header, nav"));
+      }
+
+      function setPublicCtaTarget(el, label) {
+        if (el.getAttribute("data-hama-public-target-bound") === label) return;
+        var targetUrl = null;
+        if (label === "전체 사기위험 진단하기") {
+          targetUrl = hamaWebUrl + "?utm_source=github_pages&utm_medium=public_30sec&utm_campaign=30sec_check&utm_content=diagnosis_cta";
+        } else if (label === "비슷한 상황 연습하기") {
+          targetUrl = hamaWebUrl + "?utm_source=github_pages&utm_medium=public_30sec&utm_campaign=30sec_check&utm_content=training_cta";
+        } else if (label === "하마터면 AI로 더 알아보기") {
+          targetUrl = hamaWebUrl + "?utm_source=github_pages&utm_medium=public_30sec&utm_campaign=30sec_check&utm_content=hama_web_cta";
+        }
+
+        if (targetUrl) {
+          if (el.tagName === "A") {
+            el.setAttribute("href", targetUrl);
+            el.setAttribute("target", "_blank");
+            el.setAttribute("rel", "noopener noreferrer");
+          }
+          el.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            window.open(targetUrl, "_blank", "noopener,noreferrer");
+          }, true);
+          el.setAttribute("data-hama-public-target-bound", label);
+          return;
+        }
+
+        if (label === "다시 답해보기") {
+          el.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            window.location.hash = "#/issue-check";
+            window.location.reload();
+          }, true);
+          el.setAttribute("data-hama-public-target-bound", label);
+        }
+      }
+
+      function applyPromoShell() {
+        document.body.classList.add("hama-public-promo");
+
+        document.querySelectorAll("header a, header button, nav a, nav button").forEach(function (el) {
+          if (navLabels.has(textOf(el))) {
+            el.style.display = "none";
+            el.setAttribute("aria-hidden", "true");
+            el.setAttribute("tabindex", "-1");
+          }
+        });
+
+        document.querySelectorAll("a, button").forEach(function (el) {
+          if (isTopNavigation(el)) return;
+          var label = textOf(el);
+          if (Object.prototype.hasOwnProperty.call(ctaMap, label)) {
+            el.textContent = ctaMap[label];
+            el.setAttribute("data-hama-public-cta", "renamed");
+            setPublicCtaTarget(el, ctaMap[label]);
+          } else if (el.getAttribute("data-hama-public-cta") === "renamed") {
+            setPublicCtaTarget(el, label);
+          }
+        });
+
+        if (!document.querySelector(".hama-public-timeline-link")) {
+          var link = document.createElement("a");
+          link.className = "hama-public-timeline-link";
+          link.href = "../30sec-checks/";
+          link.textContent = "다른 30초점검 보기";
+          document.body.appendChild(link);
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", applyPromoShell);
+      } else {
+        applyPromoShell();
+      }
+      new MutationObserver(applyPromoShell).observe(document.documentElement, {
+        childList: true,
+        subtree: true
+      });
+    })();
+  </script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
